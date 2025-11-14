@@ -1,7 +1,7 @@
 # Base Java 8 (maintenue)
 FROM eclipse-temurin:8-jdk AS build
 
-# Installer Maven (la seule méthode encore possible pour Java 8)
+# Installer Maven pour Java 8
 RUN apt-get update && \
     apt-get install -y maven && \
     apt-get clean
@@ -19,6 +19,9 @@ RUN mvn -DskipTests clean package
 FROM eclipse-temurin:8-jdk
 
 WORKDIR /app
+
+# ⭐ Très important : Render doit connaître le port utilisé par Spring Boot
+EXPOSE 8080
 
 COPY --from=build /app/target/*.jar app.jar
 
