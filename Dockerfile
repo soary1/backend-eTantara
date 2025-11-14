@@ -1,16 +1,12 @@
-# ====== BUILD ======
-FROM maven:3.8.5-openjdk-8 AS build
+# Étape 1 — Build avec Maven + Java 8
+FROM maven:3.8.7-openjdk-8 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn -q -e -DskipTests clean package
+COPY . .
+RUN mvn -DskipTests clean package
 
-# ====== RUN ======
-FROM openjdk:8-jdk
+# Étape 2 — Exécuter l'application avec Java 8
+FROM eclipse-temurin:8-jdk
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
-
-ENV PORT=8080
-EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
