@@ -1,0 +1,354 @@
+[
+  {
+    "id": 1,
+    "type": "complete",
+    "category": "Ohabolana",
+    "question": "Complétez cette expression malgache :",
+    "text": "Ny tsara _____ tsy mba very",
+    "correctAnswer": "fanahy",
+    "explanation": "\"Ny tsara fanahy tsy mba very\" signifie que les bonnes actions et la bonté du cœur ne sont jamais perdues.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 2,
+    "type": "meaning",
+    "category": "Ohabolana",
+    "question": "Que signifie cette expression malgache ?",
+    "text": "Izay tsy misy foto-javatra tsy mba maniry",
+    "options": [
+      "Rien ne pousse sans racines",
+      "Tout ce qui existe a une origine",
+      "Les plantes ont besoin d'eau",
+      "Il faut planter pour récolter"
+    ],
+    "correctAnswer": "Tout ce qui existe a une origine",
+    "explanation": "Cette expression signifie que tout ce qui existe a une cause, une origine, une racine. Rien n'arrive par hasard.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 3,
+    "type": "vocabulary",
+    "category": "Vocabulaire",
+    "question": "Comment dit-on 'merci beaucoup' en malgache ?",
+    "options": [
+      "Misaotra betsaka",
+      "Azafady tompoko",
+      "Veloma ry namana",
+      "Inona vaovao"
+    ],
+    "correctAnswer": "Misaotra betsaka",
+    "explanation": "\"Misaotra betsaka\" est la façon de dire 'merci beaucoup' en malgache.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 4,
+    "type": "culture",
+    "category": "Tradition",
+    "question": "Qu'est-ce que le 'Famadihana' ?",
+    "options": [
+      "Une danse traditionnelle",
+      "Un plat typique malgache",
+      "Une cérémonie de retournement des morts",
+      "Un instrument de musique"
+    ],
+    "correctAnswer": "Une cérémonie de retournement des morts",
+    "explanation": "Le Famadihana est une cérémonie traditionnelle malgache où les familles rendent hommage à leurs ancêtres.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 5,
+    "type": "complete",
+    "category": "Ohabolana",
+    "question": "Complétez ce proverbe malgache :",
+    "text": "Ny saina no _____ fa tsy ny hery",
+    "correctAnswer": "manjaka",
+    "explanation": "\"Ny saina no manjaka fa tsy ny hery\" signifie que c'est l'intelligence qui règne, pas la force.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 6,
+    "type": "geography",
+    "category": "Géographie",
+    "question": "Quelle est l'ancienne capitale de Madagascar ?",
+    "options": [
+      "Toamasina",
+      "Antsirabe",
+      "Antananarivo",
+      "Fianarantsoa"
+    ],
+    "correctAnswer": "Antananarivo",
+    "explanation": "Antananarivo est la capitale actuelle de Madagascar et était déjà capitale historique.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 7,
+    "type": "legend",
+    "category": "Tantara",
+    "question": "Qui est Ibonia dans la mythologie malgache ?",
+    "options": [
+      "Un roi historique",
+      "Un héros légendaire aux pouvoirs magiques",
+      "Un esprit de la nature",
+      "Un ancêtre royal"
+    ],
+    "correctAnswer": "Un héros légendaire aux pouvoirs magiques",
+    "explanation": "Ibonia est un héros légendaire de la mythologie malgache.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 8,
+    "type": "food",
+    "category": "Gastronomie",
+    "question": "Qu'est-ce que le 'Romazava' ?",
+    "options": [
+      "Un dessert aux fruits",
+      "Une soupe de brèdes avec de la viande",
+      "Un gâteau traditionnel",
+      "Une boisson fermentée"
+    ],
+    "correctAnswer": "Une soupe de brèdes avec de la viande",
+    "explanation": "Le Romazava est un plat traditionnel malgache, une soupe faite avec des brèdes et de la viande.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 9,
+    "type": "complete",
+    "category": "Ohabolana",
+    "question": "Complétez cette sagesse malgache :",
+    "text": "Ny teny mora _____ fa ny zavatra sarotra atao",
+    "correctAnswer": "lazaina",
+    "explanation": "\"Ny teny mora lazaina fa ny zavatra sarotra atao\" signifie qu'il est facile de parler mais difficile d'agir.",
+    "difficulty": "Difficile"
+  },
+  {
+    "id": 10,
+    "type": "music",
+    "category": "Musique",
+    "question": "Qu'est-ce que la 'Valiha' ?",
+    "options": [
+      "Une danse traditionnelle",
+      "Un instrument de musique à cordes",
+      "Un chant religieux",
+      "Un costume traditionnel"
+    ],
+    "correctAnswer": "Un instrument de musique à cordes",
+    "explanation": "La Valiha est l'instrument national de Madagascar, une cithare tubulaire en bambou.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 11,
+    "type": "complete",
+    "category": "Ohabolana",
+    "question": "Complétez ce proverbe malgache :",
+    "text": "Aleo very tsikalakalam-_____, toy izay very fanahy",
+    "correctAnswer": "bady",
+    "explanation": "\"Aleo very tsikalakalam-bady, toy izay very fanahy\" signifie 'Mieux vaut perdre un petit morceau de vêtement que de perdre son âme/sa bonté', soulignant que les valeurs morales (fanahy) sont plus importantes que les biens matériels.",
+    "difficulty": "Difficile"
+  },
+  {
+    "id": 12,
+    "type": "vocabulary",
+    "category": "Vocabulaire",
+    "question": "Quel est le mot malgache pour 'enfant' ?",
+    "options": [
+      "Olona",
+      "Ray",
+      "Zaza",
+      "Zanaka"
+    ],
+    "correctAnswer": "Zaza",
+    "explanation": "\"Zaza\" signifie 'enfant' ou 'bébé' en malgache. \"Zanaka\" est plus spécifique et signifie 'fils/fille' ou 'descendant'.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 13,
+    "type": "culture",
+    "category": "Tradition",
+    "question": "Quel terme désigne le 'tabou' ou l'interdit sacré (coutumier ou ancestral) dans la culture malgache ?",
+    "options": [
+      "Fihavanana",
+      "Fomba",
+      "Fady",
+      "Hainteny"
+    ],
+    "correctAnswer": "Fady",
+    "explanation": "Le 'Fady' est un ensemble d'interdits sacrés qui régissent la vie quotidienne, la relation avec l'environnement et les ancêtres. Leur non-respect est considéré comme dangereux ou impur.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 14,
+    "type": "meaning",
+    "category": "Ohabolana",
+    "question": "Quelle est la signification de ce proverbe malgache :",
+    "text": "Ny rano mandeha no mamonjy azy",
+    "options": [
+      "L'eau est la source de toute sagesse.",
+      "C'est l'eau qui coule qui se sauve.",
+      "Il faut toujours suivre le courant de la vie.",
+      "Une petite goutte d'eau finit par faire une rivière."
+    ],
+    "correctAnswer": "C'est l'eau qui coule qui se sauve.",
+    "explanation": "Ce proverbe encourage l'action, l'effort et la persévérance. Comme l'eau qui coule ne stagne pas et trouve son chemin, l'homme doit agir pour réussir.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 15,
+    "type": "history",
+    "category": "Histoire",
+    "question": "Qui fut la dernière reine à régner sur le Royaume de Madagascar avant la colonisation française ?",
+    "options": [
+      "Ranavalona I",
+      "Rasoherina",
+      "Ranavalona III",
+      "Beti"
+    ],
+    "correctAnswer": "Ranavalona III",
+    "explanation": "Ranavalona III a régné de 1883 à 1897 et fut déposée et exilée par les Français après l'annexion de Madagascar, mettant fin à la monarchie Imerina.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 16,
+    "type": "vocabulary",
+    "category": "Vocabulaire",
+    "question": "Que signifie le mot malgache 'fahaleovantena' ?",
+    "options": [
+      "Fierté",
+      "Indépendance",
+      "Famille",
+      "Guerre"
+    ],
+    "correctAnswer": "Indépendance",
+    "explanation": "\"Fahaleovantena\" se traduit directement par 'indépendance', en référence à l'autonomie nationale.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 17,
+    "type": "fauna_flora",
+    "category": "Faune & Flore",
+    "question": "Quel animal arboricole, endémique de Madagascar, est le plus petit primate du monde et est connu pour ses grands yeux nocturnes ?",
+    "options": [
+      "L'aye-aye",
+      "Le sifaka",
+      "Le lémurien souris (Microcebus)",
+      "Le fossa"
+    ],
+    "correctAnswer": "Le lémurien souris (Microcebus)",
+    "explanation": "Le lémurien souris, appartenant au genre Microcebus, est le plus petit primate connu, mesurant moins de 10 cm sans la queue.",
+    "difficulty": "Difficile"
+  },
+  {
+    "id": 18,
+    "type": "complete",
+    "category": "Ohabolana",
+    "question": "Complétez cette sagesse malgache :",
+    "text": "Ny fananana tokoa ka tsy very raha tsy _____.",
+    "correctAnswer": "hita",
+    "explanation": "\"Ny fananana tokoa ka tsy very raha tsy hita\" signifie 'Ce que l'on possède vraiment n'est perdu que si l'on ne le voit plus'. Le sens est que les biens immatériels ou les choses ancrées dans l'esprit ne sont jamais perdus tant qu'on s'en souvient.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 19,
+    "type": "culture",
+    "category": "Tradition",
+    "question": "Qu'est-ce que l' 'Hira Gasy' ?",
+    "options": [
+      "Un art martial traditionnel des Hautes Terres.",
+      "Un festival annuel de récolte de riz.",
+      "Un spectacle populaire mêlant chants, danses et théâtre satirique.",
+      "Un type de cérémonie de mariage traditionnel."
+    ],
+    "correctAnswer": "Un spectacle populaire mêlant chants, danses et théâtre satirique.",
+    "explanation": "L'Hira Gasy est un opéra populaire traditionnel, typique des Hautes Terres, où les troupes se livrent à des joutes artistiques et oratoires publiques.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 20,
+    "type": "geography",
+    "category": "Géographie",
+    "question": "Quel est le point culminant de Madagascar (le plus haut sommet) ?",
+    "options": [
+      "Le Pic Boby",
+      "La Tsiafajavona",
+      "L'Imarivolanitra",
+      "Le Maromokotro"
+    ],
+    "correctAnswer": "Le Maromokotro",
+    "explanation": "Le Maromokotro, situé dans le massif du Tsaratanana au nord, est le point culminant de l'île avec une altitude de 2876 mètres.",
+    "difficulty": "Difficile"
+  },
+  {
+    "id": 21,
+    "type": "vocabulary",
+    "category": "Vocabulaire",
+    "question": "Comment dit-on 'maison' en malgache ?",
+    "options": [
+      "Trondro",
+      "Trano",
+      "Vary",
+      "Lalana"
+    ],
+    "correctAnswer": "Trano",
+    "explanation": "\"Trano\" signifie 'maison' ou 'bâtiment'.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 22,
+    "type": "fauna_flora",
+    "category": "Faune & Flore",
+    "question": "Quel arbre massif, endémique de Madagascar, est surnommé 'arbre bouteille' pour sa capacité à stocker l'eau ?",
+    "options": [
+      "Le Ravinala (Arbre du voyageur)",
+      "Le Palissandre",
+      "Le Baobab (Adansonia)",
+      "Le Tamarinier"
+    ],
+    "correctAnswer": "Le Baobab (Adansonia)",
+    "explanation": "Plusieurs espèces de Baobab sont endémiques à Madagascar. Leur tronc est adapté pour stocker de l'eau, leur valant le surnom d''arbre bouteille'.",
+    "difficulty": "Facile"
+  },
+  {
+    "id": 23,
+    "type": "food",
+    "category": "Gastronomie",
+    "question": "Quel est le nom du plat malgache à base de riz et d'eau (une sorte de bouillie liquide) que l'on mange souvent au petit-déjeuner ?",
+    "options": [
+      "Vary amin'anana",
+      "Koba",
+      "Vary sosoa",
+      "Mofo Gasy"
+    ],
+    "correctAnswer": "Vary sosoa",
+    "explanation": "Le \"Vary sosoa\" est un plat de riz très cuit dans beaucoup d'eau, consommé traditionnellement au petit-déjeuner ou en accompagnement.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 24,
+    "type": "history",
+    "category": "Histoire",
+    "question": "En quelle année Madagascar a-t-elle obtenu son indépendance de la France ?",
+    "options": [
+      "1950",
+      "1960",
+      "1970",
+      "1980"
+    ],
+    "correctAnswer": "1960",
+    "explanation": "Madagascar a proclamé son indépendance le 26 juin 1960, après une période de protectorat et de colonisation française.",
+    "difficulty": "Moyen"
+  },
+  {
+    "id": 25,
+    "type": "culture",
+    "category": "Tradition",
+    "question": "Quelle est l'une des significations profondes du terme 'Fihavanana' dans la culture malgache ?",
+    "options": [
+      "L'art de la guerre et de la défense.",
+      "Le respect et la solidarité entre individus, la 'parenté morale'.",
+      "L'ensemble des rituels funéraires.",
+      "La hiérarchie des castes sociales."
+    ],
+    "correctAnswer": "Le respect et la solidarité entre individus, la 'parenté morale'.",
+    "explanation": "Le 'Fihavanana' est un concept social et philosophique fondamental à Madagascar qui englobe la paix, l'harmonie, le respect mutuel et l'aide au sein de la communauté. C'est l'essence du vivre-ensemble.",
+    "difficulty": "Facile"
+  }
+]

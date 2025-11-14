@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eTantara - Contenus Culturels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/pages.css}">
+</head>
+<body class="page-contenus">
+    <!-- Navigation -->
+    <!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="navbar-brand">
+            <i class="fas fa-book-reader"></i>
+            eTantara
+        </a>
+        <div class="nav-links">
+            <a href="/dashboard"><i class="fas fa-th-large"></i> Tableau de bord</a>
+            <a href="/contenus" class="active"><i class="fas fa-book-open"></i> Contenus culturels</a>
+
+            <!-- Section connexion facultative -->
+            <div id="authSection">
+                <div id="guestSection" class="guest-section">
+                    <button id="showLoginBtn" class="btn btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Se connecter
+                    </button>
+                    <a href="/register" class="btn btn-register">
+                        <i class="fas fa-user-plus"></i> S'inscrire
+                    </a>
+                </div>
+
+                <div id="userSection" class="user-section" style="display: none;">
+                    <div class="user-stats">
+                        <span id="userWelcome" class="user-welcome">
+                            <i class="fas fa-user"></i> Bienvenue !
+                        </span>
+                        <span id="userScore" class="user-score" style="display: none;">
+                            <i class="fas fa-star"></i> <span id="scoreValue">0</span> pts
+                        </span>
+                    </div>
+                    <a href="#" id="logoutBtn" class="btn btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="header">
+            <h1><i class="fas fa-book-reader"></i> Tantara, Lovantsofina, Kabary & Plus</h1>
+            <p>Découvrez la richesse de la culture malgache à travers nos contenus authentiques</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <select id="categoryFilter" class="filter-select">
+                <option value="">Toutes les catégories</option>
+            </select>
+            <input type="text" id="searchBox" class="search-box" placeholder="Rechercher par titre, auteur ou région...">
+        </div>
+
+        <!-- Content Grid -->
+        <div id="contentGrid" class="content-grid">
+            <div class="loading">
+                <i class="fas fa-spinner"></i>
+                Chargement des contenus...
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour affichage du contenu -->
+    <div id="contentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div id="modalBody">
+                <!-- Contenu dynamique -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de connexion -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2 class="modal-title">Connexion facultative</h2>
+                <span class="close" id="closeLoginModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1rem; color: #666; text-align: center;">
+                    Se connecter vous permet de sauvegarder vos préférences et de suivre vos activités.
+                </p>
+                
+                <form id="loginForm">
+                    <div style="margin-bottom: 1rem;">
+                        <label for="loginEmail" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email:</label>
+                        <input type="email" id="loginEmail" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label for="loginPassword" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Mot de passe:</label>
+                        <input type="password" id="loginPassword" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">
+                        <i class="fas fa-sign-in-alt"></i> Se connecter
+                    </button>
+                </form>
+                
+                <div style="text-align: center;">
+                    <p style="color: #666; margin-bottom: 0.5rem;">Pas encore de compte ?</p>
+                    <a href="/register" class="btn btn-register" style="display: inline-block;">
+                        <i class="fas fa-user-plus"></i> Créer un compte
+                    </a>
+                </div>
+                
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee; text-align: center;">
+                    <button id="continueAsGuest" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Continuer sans se connecter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allContents = [];
+        let categories = [];
+        let currentUser = null;
+
+        // Initialiser la page au chargement
+        document.addEventListener('DOMContentLoaded', async function() {
+            const token = localStorage.getItem('token');
+            
+            // Afficher/masquer les boutons selon l'état de connexion
+            await updateUIBasedOnAuth(token);
+
+            // Charger les données
+            await loadCategories();
+            await loadContents();
+            
+            setupEventListeners();
+        });
+
+        // Charger les catégories
+        async function loadCategories() {
+            try {
+                const response = await fetch('/api/contenus/categories');
+                if (response.ok) {
+                    categories = await response.json();
+                    populateCategoryFilter();
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des catégories:', error);
+            }
+        }
+
+        // Peupler le filtre des catégories
+        function populateCategoryFilter() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.nom;
+                option.textContent = category.nom;
+                categoryFilter.appendChild(option);
+            });
+        }
+
+        // Charger tous les contenus
+        async function loadContents() {
+            try {
+                const response = await fetch('/api/contenus');
+                if (response.ok) {
+                    allContents = await response.json();
+                    displayContents(allContents);
+                } else {
+                    document.getElementById('contentGrid').innerHTML = '<p class="loading">Erreur lors du chargement des contenus.</p>';
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des contenus:', error);
+                document.getElementById('contentGrid').innerHTML = '<p class="loading">Erreur lors du chargement des contenus.</p>';
+            }
+        }
+
+        // Afficher les contenus
+        function displayContents(contents) {
+            const grid = document.getElementById('contentGrid');
+            
+            if (contents.length === 0) {
+                grid.innerHTML = '<p class="loading">Aucun contenu trouvé.</p>';
+                return;
+            }
+
+            grid.innerHTML = contents.map(content => `
+                <div class="content-card">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">${content.titre}</h3>
+                        </div>
+                        <span class="card-category">${content.categorie || 'Non catégorisé'}</span>
+                    </div>
+                    
+                    <div class="card-meta">
+                        ${content.auteur ? `<span><i class="fas fa-user"></i> ${content.auteur}</span>` : ''}
+                        ${content.region ? `<span><i class="fas fa-map-marker-alt"></i> ${content.region}</span>` : ''}
+                        ${content.niveauDifficulte ? `<span><i class="fas fa-star"></i> ${content.niveauDifficulte}</span>` : ''}
+                    </div>
+                    
+                    <p class="card-description">${content.resume || 'Description non disponible'}</p>
+                    
+                    <div class="card-stats">
+                        <span><i class="fas fa-headphones"></i> 0 écoutes</span>
+                        <span><i class="fas fa-download"></i> 0 téléchargements</span>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="viewContent(${content.id})">
+                            <i class="fas fa-eye"></i> Lire
+                        </button>
+                        ${content.fichierAudio ? `
+                            <button class="btn btn-audio" onclick="playAudio(${content.id})">
+                                <i class="fas fa-play"></i> Écouter
+                            </button>
+                        ` : ''}
+                        <button class="btn btn-download" onclick="downloadContent(${content.id})">
+                            <i class="fas fa-download"></i> Télécharger
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Configurer les écouteurs d'événements
+        function setupEventListeners() {
+            // Filtre par catégorie
+            document.getElementById('categoryFilter').addEventListener('change', filterContents);
+            
+            // Recherche
+            document.getElementById('searchBox').addEventListener('input', filterContents);
+            
+            // Modal contenu
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            
+            // Modal connexion
+            document.getElementById('showLoginBtn').addEventListener('click', showLoginModal);
+            document.getElementById('closeLoginModal').addEventListener('click', closeLoginModal);
+            document.getElementById('continueAsGuest').addEventListener('click', closeLoginModal);
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
+            // Gestion des clics sur les modals
+            window.addEventListener('click', function(event) {
+                const contentModal = document.getElementById('contentModal');
+                const loginModal = document.getElementById('loginModal');
+                
+                if (event.target === contentModal) {
+                    closeModal();
+                }
+                if (event.target === loginModal) {
+                    closeLoginModal();
+                }
+            });
+            
+            // Déconnexion
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('token');
+                    updateUIBasedOnAuth(null);
+                    showSuccessMessage('Vous avez été déconnecté avec succès !');
+                });
+            }
+        }
+
+        // Filtrer les contenus
+        function filterContents() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const searchQuery = document.getElementById('searchBox').value.toLowerCase();
+            
+            let filteredContents = allContents;
+            
+            // Filtrer par catégorie
+            if (categoryFilter) {
+                filteredContents = filteredContents.filter(content => 
+                    content.categorie === categoryFilter
+                );
+            }
+            
+            // Filtrer par recherche
+            if (searchQuery) {
+                filteredContents = filteredContents.filter(content =>
+                    content.titre.toLowerCase().includes(searchQuery) ||
+                    (content.auteur && content.auteur.toLowerCase().includes(searchQuery)) ||
+                    (content.region && content.region.toLowerCase().includes(searchQuery)) ||
+                    (content.resume && content.resume.toLowerCase().includes(searchQuery))
+                );
+            }
+            
+            displayContents(filteredContents);
+        }
+
+        // Voir le contenu complet
+        async function viewContent(contentId) {
+            try {
+                const response = await fetch(`/api/contenus/${contentId}`);
+                if (response.ok) {
+                    const content = await response.json();
+                    showContentModal(content);
+                } else {
+                    alert('Erreur lors du chargement du contenu.');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors du chargement du contenu.');
+            }
+        }
+
+        // Afficher le modal avec le contenu
+        function showContentModal(content) {
+            const modal = document.getElementById('contentModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            title.textContent = content.titre;
+            
+            body.innerHTML = `
+                <div style="margin-bottom: 1rem;">
+                    <strong>Auteur:</strong> ${content.auteur || 'Inconnu'}<br>
+                    <strong>Région:</strong> ${content.region || 'Non spécifiée'}<br>
+                    <strong>Catégorie:</strong> ${content.categorie || 'Non catégorisé'}<br>
+                    <strong>Niveau:</strong> ${content.niveauDifficulte || 'Non spécifié'}
+                </div>
+                
+                ${content.fichierAudio ? `
+                    <div style="margin-bottom: 1rem;">
+                        <audio controls class="audio-player">
+                            <source src="/api/contenus/${content.id}/audio" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'audio HTML5.
+                        </audio>
+                    </div>
+                ` : ''}
+                
+                <div class="modal-text">${content.texte || 'Contenu non disponible'}</div>
+                
+                <div style="margin-top: 1rem; text-align: center;">
+                    <button class="btn btn-download" onclick="downloadContent(${content.id})">
+                        <i class="fas fa-download"></i> Télécharger ce contenu
+                    </button>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        // Fermer le modal
+        function closeModal() {
+            document.getElementById('contentModal').style.display = 'none';
+        }
+
+        // Lire l'audio
+        async function playAudio(contentId) {
+            const token = localStorage.getItem('token');
+            
+            // Enregistrer l'écoute
+            try {
+                await fetch(`/api/contenus/${contentId}/ecouter`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } catch (error) {
+                console.log('Erreur lors de l\'enregistrement de l\'écoute:', error);
+            }
+            
+            // Ouvrir l'audio dans un nouvel onglet
+            window.open(`/api/contenus/${contentId}/audio`, '_blank');
+        }
+
+        // Télécharger le contenu
+        function downloadContent(contentId) {
+            window.open(`/api/contenus/${contentId}/telecharger`, '_blank');
+        }
+
+        // Mettre à jour l'interface selon l'état de connexion
+        async function updateUIBasedOnAuth(token) {
+            const guestSection = document.getElementById('guestSection');
+            const userSection = document.getElementById('userSection');
+            const userWelcome = document.getElementById('userWelcome');
+            const userScore = document.getElementById('userScore');
+            const scoreValue = document.getElementById('scoreValue');
+            
+            if (token) {
+                // Utilisateur connecté
+                guestSection.style.display = 'none';
+                userSection.style.display = 'flex';
+                
+                // Récupérer les infos utilisateur depuis le token
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    const username = payload.sub ? payload.sub.split('@')[0] : 'Utilisateur';
+                    userWelcome.innerHTML = `<i class="fas fa-user"></i> Bonjour ${username} !`;
+                    
+                    // Charger les vraies statistiques de l'utilisateur
+                    await loadUserStats(token);
+                } catch (e) {
+                    userWelcome.innerHTML = `<i class="fas fa-user"></i> Bonjour !`;
+                    userScore.style.display = 'none';
+                }
+            } else {
+                // Utilisateur non connecté
+                guestSection.style.display = 'flex';
+                userSection.style.display = 'none';
+                userScore.style.display = 'none';
+            }
+        }
+
+        // Charger les statistiques de l'utilisateur connecté
+        async function loadUserStats(token) {
+            try {
+                const response = await fetch('/api/user/stats', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const stats = await response.json();
+                    displayUserStats(stats);
+                } else {
+                    console.log('Impossible de charger les statistiques utilisateur');
+                    document.getElementById('userScore').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des stats:', error);
+                document.getElementById('userScore').style.display = 'none';
+            }
+        }
+
+        // Afficher les statistiques de l'utilisateur
+        function displayUserStats(stats) {
+            const userScore = document.getElementById('userScore');
+            const scoreValue = document.getElementById('scoreValue');
+            
+            if (stats.score !== undefined) {
+                if (stats.score === 0) {
+                    // Si le score est 0, on peut soit le masquer soit l'afficher avec un message
+                    scoreValue.textContent = '0';
+                    userScore.style.display = 'flex';
+                    userScore.title = `Niveau: ${stats.niveau} - Commencez à explorer pour gagner des points !`;
+                } else {
+                    scoreValue.textContent = stats.score;
+                    userScore.style.display = 'flex';
+                    userScore.title = `Niveau: ${stats.niveau}`;
+                }
+            } else {
+                userScore.style.display = 'none';
+            }
+        }
+
+        // Afficher le modal de connexion
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        // Fermer le modal de connexion
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('loginForm').reset();
+        }
+
+        // Gérer la connexion
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.token);
+                    await updateUIBasedOnAuth(data.token);
+                    closeLoginModal();
+                    showSuccessMessage('Connexion réussie ! Bienvenue sur eTantara.');
+                } else {
+                    const error = await response.json();
+                    showErrorMessage(error.message || 'Erreur de connexion');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showErrorMessage('Erreur de connexion. Vérifiez votre connexion internet.');
+            }
+        }
+
+        // Afficher un message de succès
+        function showSuccessMessage(message) {
+            const alert = document.createElement('div');
+            alert.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1100;
+                font-weight: 500;
+            `;
+            alert.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        // Afficher un message d'erreur
+        function showErrorMessage(message) {
+            const alert = document.createElement('div');
+            alert.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #dc3545;
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1100;
+                font-weight: 500;
+            `;
+            alert.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
