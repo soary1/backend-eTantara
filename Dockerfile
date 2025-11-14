@@ -1,12 +1,25 @@
-# Étape 1 — Build avec Maven + Java 8
-FROM maven:3.8.7-openjdk-8 AS build
+# Base Java 8 (maintenue)
+FROM eclipse-temurin:8-jdk AS build
+
+# Installer Maven (la seule méthode encore possible pour Java 8)
+RUN apt-get update && \
+    apt-get install -y maven && \
+    apt-get clean
+
 WORKDIR /app
+
+# Copier tout le projet
 COPY . .
+
+# Build du projet
 RUN mvn -DskipTests clean package
 
-# Étape 2 — Exécuter l'application avec Java 8
+# ----------- Runtime -----------
+
 FROM eclipse-temurin:8-jdk
+
 WORKDIR /app
+
 COPY --from=build /app/target/*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
